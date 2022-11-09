@@ -24,10 +24,11 @@ class Register extends Component{
         })
     }
 
-    handleSubmit = () => {
+    handleSubmit = (event) => {
+        event.preventDefault()
         const data = {username: this.state.username, password: this.state.password, confirmPassword: this.state.confirmPassword, role: 'USER'}
         if(this.state.password === this.state.confirmPassword){
-            axios.post(baseUrl + "/register", data)
+            axios.post(baseUrl + "/register", data).then(response => alert(response.data))
         }else{
             alert("Password and Confirm Password must match!!!")
         }
@@ -41,11 +42,11 @@ class Register extends Component{
                 <label class="sr-only">Username</label>
                 <FormGroup>
                 <Input
-                    type="text"
+                    type="email"
                     id="username"
                     name="username"
                     class="form-control"
-                    placeholder="Username"
+                    placeholder="Email Address"
                     v-model="user.username"
                     onChange={this.handleInputChange}
                     required

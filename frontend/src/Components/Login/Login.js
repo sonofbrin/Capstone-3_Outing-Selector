@@ -26,7 +26,8 @@ class Login extends Component {
     }
     
 
-    handleLogin = async () => {
+    handleLogin = async (event) => {
+        event.preventDefault()
         const data = { username: this.state.username, password: this.state.password };
         
 
@@ -52,11 +53,11 @@ class Login extends Component {
                 <FormGroup>
                 {/**<Label class="sr-only">Username</Label>*/}
                 <Input
-                    type="text"
+                    type="email"
                     id="username"
                     name="username"
                     class="form-control"
-                    placeholder="Username"
+                    placeholder="Email Address"
                     v-model="user.username"
                     onChange={this.handleInputChange}
                     required
