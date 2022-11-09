@@ -1,6 +1,7 @@
 package com.techelevator.model;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 public class Outing {
 
@@ -8,6 +9,7 @@ public class Outing {
     private Long inviterId;
     private LocalDateTime dateTime;
     private LocalDateTime decisionTime;
+    private Set<RestaurantRef> outingRestaurants;
 
     public Long getId() {
         return id;
