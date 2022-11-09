@@ -5,7 +5,8 @@ import {withRouter} from 'react-router-dom'
 import {addToken, addUser} from '../../Redux/actionCreators'
 import {baseUrl} from '../../Shared/baseUrl'
 import axios from 'axios'
-
+import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap'
+import './login.css';
 
 
 const mapDispatchToProps = (dispatch) => ({
@@ -45,10 +46,12 @@ class Login extends Component {
 
     render(){
         return(
-            <div>
+            <div className='login'>
+                <Form className='loginForm'>
                 <h1>Please Sign In</h1>
-                <label class="sr-only">Username</label>
-                <input
+                <FormGroup>
+                {/**<Label class="sr-only">Username</Label>*/}
+                <Input
                     type="text"
                     id="username"
                     name="username"
@@ -58,8 +61,10 @@ class Login extends Component {
                     onChange={this.handleInputChange}
                     required
                 />
-                <label class="sr-only">Password</label>
-                <input
+                </FormGroup>
+                <br/>
+                <FormGroup>
+                <Input
                     type="password"
                     id="password"
                     name="password"
@@ -69,8 +74,15 @@ class Login extends Component {
                     onChange={this.handleInputChange}
                     required
                 />
+                </FormGroup>
+                <br/>
+                <Button className='loginButton' color='primary' type="submit" onClick={this.handleLogin}>Sign in</Button>
+                </Form>
+                <div className='underLogin'>
+                <Link to="/register">Forgot Password</Link>
+                {' '}
                 <Link to="/register">Need an account?</Link>
-                <button type="submit" onClick={this.handleLogin}>Sign in</button>
+                </div>
             </div>
         )
     }
