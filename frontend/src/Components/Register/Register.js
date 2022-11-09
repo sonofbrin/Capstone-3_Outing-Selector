@@ -2,6 +2,8 @@ import axios from 'axios'
 import {Component} from 'react'
 import {Link} from 'react-router-dom'
 import { baseUrl } from '../../Shared/baseUrl'
+import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap'
+import '../Login/login.css'
 
 class Register extends Component{
 
@@ -33,10 +35,12 @@ class Register extends Component{
 
     render(){
         return(
-            <div>
+            <div className='register'>
                 <h1>Create Account</h1>
+                <Form>
                 <label class="sr-only">Username</label>
-                <input
+                <FormGroup>
+                <Input
                     type="text"
                     id="username"
                     name="username"
@@ -46,8 +50,11 @@ class Register extends Component{
                     onChange={this.handleInputChange}
                     required
                 />
+                </FormGroup>
+                <br/>
+                <FormGroup>
                 <label class="sr-only">Password</label>
-                <input
+                <Input
                     type="password"
                     id="password"
                     name="password"
@@ -57,7 +64,10 @@ class Register extends Component{
                     onChange={this.handleInputChange}
                     required
                 />
-                <input
+                </FormGroup>
+                <br/>
+                <FormGroup>
+                <Input
                     type="password"
                     id="password-confirm"
                     name="confirmPassword"
@@ -67,8 +77,12 @@ class Register extends Component{
                     onChange={this.handleInputChange}
                     required
                 />
+                </FormGroup>
+                <br/>
+                <Button color='primary' type="submit" onClick={this.handleSubmit}>Sign in</Button>
+                </Form>
                 <Link to="/login">Have an account?</Link>
-                <button type="submit" onClick={this.handleSubmit}>Sign in</button>
+
             </div>
         )
     }
