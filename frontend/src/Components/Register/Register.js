@@ -80,7 +80,7 @@ class Register extends Component{
                 />
                 </FormGroup>
                 <br/>
-                <Button color='primary' type="submit" onClick={this.handleSubmit}>Sign in</Button>
+                <Button color='primary' type="submit" onClick={this.handleSubmit}>Register</Button>
                 </Form>
                 <Link to="/login">Have an account?</Link>
 

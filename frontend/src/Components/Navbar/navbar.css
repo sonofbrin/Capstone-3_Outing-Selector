@@ -1,15 +1,7 @@
-.login, .register{
-    width: 50%;
-    margin:auto;
+#navBar{
+    display: block;
 }
-Button{
-   width: 100%;
-    margin:auto;
-}
-Link{
-    margin:auto;
-    justify-content: space-between;
-}
+
 NavLink {
     
     width: 50%;
