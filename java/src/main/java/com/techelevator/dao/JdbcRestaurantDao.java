@@ -1,12 +1,15 @@
 package com.techelevator.dao;
 
+import com.techelevator.model.Hours;
 import com.techelevator.model.Restaurant;
+import com.techelevator.model.TagRef;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class JdbcRestaurantDao implements RestaurantDao{
@@ -19,6 +22,7 @@ public class JdbcRestaurantDao implements RestaurantDao{
 
     @Override
     public Long addRestaurant(Restaurant restaurant) {
+        //TODO Add entries into restaurant_tag and hours tables
         String insertRestaurant = "INSERT INTO restaurant (name, address, city, state, zip, img_url) VALUES(?, ?, ?, ?, ?, ?) RETURNING id";
         Long id = jdbcTemplate.queryForObject(insertRestaurant, Long.class, restaurant.getName(), restaurant.getAddress(),
                 restaurant.getCity(), restaurant.getState(), restaurant.getZip(), restaurant.getImgUrl());
@@ -47,11 +51,14 @@ public class JdbcRestaurantDao implements RestaurantDao{
         }
         return restaurants;
     }
-
-//    @Override
-//    public List<Restaurant> findRestaurantsByCity(String city) {
-//        return null;
-//    }
+    private Hours findRestaurantHours(Long restaurantId) {
+        //TODO Return corresponding hours row for restaurant Id
+        return null;
+    }
+    private Set<TagRef> findRestaurantTags(Long restaurantId) {
+        // TODO Build a set of TagRefs with restaurant ids matching restaurant
+        return null;
+    }
 
     private Restaurant mapRowToRestaurant(SqlRowSet results) {
         Restaurant restaurant = new Restaurant();
@@ -62,6 +69,9 @@ public class JdbcRestaurantDao implements RestaurantDao{
         restaurant.setState(results.getString("state"));
         restaurant.setZip(results.getString("zip"));
         restaurant.setImgUrl(results.getString("img_url"));
+        restaurant.setRestaurantHours(findRestaurantHours(restaurant.getId()));
+        restaurant.setRestaurantTags(findRestaurantTags(restaurant.getId()));
         return restaurant;
     }
+
 }

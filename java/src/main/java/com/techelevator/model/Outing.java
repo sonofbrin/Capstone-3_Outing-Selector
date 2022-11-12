@@ -10,6 +10,7 @@ public class Outing {
     private LocalDateTime dateTime;
     private LocalDateTime decisionTime;
     private Set<RestaurantRef> outingRestaurants;
+    private Set<GuestRef> outingGuests;
 
     public Long getId() {
         return id;
@@ -41,5 +42,21 @@ public class Outing {
 
     public void setDecisionTime(LocalDateTime decisionTime) {
         this.decisionTime = decisionTime;
+    }
+
+    public Set<RestaurantRef> getOutingRestaurants() {
+        return outingRestaurants;
+    }
+
+    public void setOutingRestaurants(Set<RestaurantRef> outingRestaurants) {
+        this.outingRestaurants = outingRestaurants;
+    }
+
+    public Set<GuestRef> getOutingGuests() {
+        return outingGuests;
+    }
+
+    public void setOutingGuests(Set<GuestRef> outingGuests) {
+        this.outingGuests = outingGuests;
     }
 }

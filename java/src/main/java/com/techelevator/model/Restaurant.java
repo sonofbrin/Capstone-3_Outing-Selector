@@ -1,6 +1,7 @@
 package com.techelevator.model;
 
 import javax.validation.constraints.NotBlank;
+import java.util.Set;
 
 public class Restaurant {
 
@@ -14,6 +15,8 @@ public class Restaurant {
     @NotBlank
     private String zip;
     private String imgUrl;
+    private Set<TagRef> restaurantTags;
+    private Hours restaurantHours;
 
     public Long getId() {
         return id;
@@ -69,5 +72,21 @@ public class Restaurant {
 
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
+    }
+
+    public Set<TagRef> getRestaurantTags() {
+        return restaurantTags;
+    }
+
+    public void setRestaurantTags(Set<TagRef> restaurantTags) {
+        this.restaurantTags = restaurantTags;
+    }
+
+    public Hours getRestaurantHours() {
+        return restaurantHours;
+    }
+
+    public void setRestaurantHours(Hours restaurantHours) {
+        this.restaurantHours = restaurantHours;
     }
 }
