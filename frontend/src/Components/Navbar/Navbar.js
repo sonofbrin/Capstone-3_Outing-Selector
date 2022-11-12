@@ -4,6 +4,7 @@ import { Nav, NavItem, NavLink } from "reactstrap";
 import Login from "../Login/Login";
 import Main from "../Main/Main";
 import Home from "../Home/Home";
+import Register from "../Register/Register";
 import './navbar.css';
 
 export default function Navbar() {
@@ -26,7 +27,7 @@ export default function Navbar() {
             <NavLink href="Login">Log In</NavLink>
           </NavItem>
           <NavItem>
-            <NavLink href="/register">Register</NavLink>
+            <NavLink href="Register">Register</NavLink>
           </NavItem>
         </Nav>
       </div>
