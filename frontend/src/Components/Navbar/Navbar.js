@@ -14,14 +14,13 @@ export default function Navbar() {
         <a href="/" className="restaurantTinderNav">
           <h1>Restaurant Tinder</h1>
         </a>
-      </div>
       <div id="nav-buttons">
         <Nav>
           <NavItem>
             <NavLink href="Home">Home</NavLink>
           </NavItem>
           <NavItem>
-            <NavLink href="/homepage">Restuarant Options</NavLink>
+            <NavLink href="/homepage">Restaurant Options</NavLink>
           </NavItem>
           <NavItem>
             <NavLink href="Login">Log In</NavLink>
@@ -31,6 +30,7 @@ export default function Navbar() {
           </NavItem>
         </Nav>
       </div>
+    </div>
     </div>
   );
 }

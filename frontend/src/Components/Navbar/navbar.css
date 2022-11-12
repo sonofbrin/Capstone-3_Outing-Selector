@@ -1,27 +1,18 @@
-div a{
+a{
     display: inline;
     text-decoration: none;
+    color: black;
 }
 .nav-link{
     display: inline;
 }
-#company-info{
-    display: flex;
-    flex-basis: 50%;
-}
+
 #nav{
     display: flex;
-    flex-basis: 50%;
+    justify-content: flex-end;
+    align-items: flex-end;
 }
 #nav-buttons{
-    flex-basis: 50%;
-}
-#navbar {
-    display: flex;
-    border-radius: 5px;
-    text-align: center;
-    line-height: 50px;
-    text-transform: uppercase;
-    font-weight: bold;
-    white-space: nowrap;
+   display: flex;
+    justify-content: end;
 }

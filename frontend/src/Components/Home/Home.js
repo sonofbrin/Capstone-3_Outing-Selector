@@ -30,7 +30,6 @@ function Home(props) {
     return(
         <div className='home-container'>
             <div className='hero-banner'>
-                Hero Banner
                 <HeroBanner />
             </div>
             <div className='search'>
