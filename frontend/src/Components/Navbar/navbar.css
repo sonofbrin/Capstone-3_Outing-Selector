@@ -1,14 +1,18 @@
-#navBar{
-    display: block;
+a{
+    display: inline;
+    text-decoration: none;
+    color: black;
+}
+.nav-link{
+    display: inline;
 }
 
-NavLink {
-    
-    width: 50%;
-    border-radius: 5px;
-    text-align: center;
-    line-height: 50px;
-    text-transform: uppercase;
-    font-weight: bold;
-    white-space: nowrap;
+#nav{
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+#nav-buttons{
+   display: flex;
+    justify-content: end;
 }

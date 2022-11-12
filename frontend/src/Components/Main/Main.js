@@ -34,6 +34,7 @@ class Main extends Component {
         return(
             <div>
                 <Navbar />
+                <Home />
                 {this.props.token.token !== undefined ?
                         <div>
                             <Link to='/home'>Home | </Link>

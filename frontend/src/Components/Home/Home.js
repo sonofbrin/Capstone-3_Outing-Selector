@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom'
 import RestaurantCard from './RestaurantCard';
+import HeroBanner from './HeroBanner/HeroBanner';
 
 function Home(props) {
 
@@ -29,7 +30,7 @@ function Home(props) {
     return(
         <div className='home-container'>
             <div className='hero-banner'>
-                Hero Banner
+                <HeroBanner />
             </div>
             <div className='search'>
                 Search

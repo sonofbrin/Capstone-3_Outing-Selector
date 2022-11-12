@@ -3,7 +3,9 @@ import { Switch, Route, Redirect, Link } from "react-router-dom";
 import { Nav, NavItem, NavLink } from "reactstrap";
 import Login from "../Login/Login";
 import Main from "../Main/Main";
-import "./navbar.css";
+import Home from "../Home/Home";
+import Register from "../Register/Register";
+import './navbar.css';
 
 export default function Navbar() {
   return (
@@ -12,23 +14,23 @@ export default function Navbar() {
         <a href="/" className="restaurantTinderNav">
           <h1>Restaurant Tinder</h1>
         </a>
-      </div>
       <div id="nav-buttons">
         <Nav>
           <NavItem>
-            <NavLink href="#">Home</NavLink>
+            <NavLink href="Home">Home</NavLink>
           </NavItem>
           <NavItem>
-            <NavLink href="/homepage">Restuarant Options</NavLink>
+            <NavLink href="/homepage">Restaurant Options</NavLink>
           </NavItem>
           <NavItem>
-            <NavLink href="/login">Log In</NavLink>
+            <NavLink href="Login">Log In</NavLink>
           </NavItem>
           <NavItem>
-            <NavLink href="/register">Register</NavLink>
+            <NavLink href="Register">Register</NavLink>
           </NavItem>
         </Nav>
       </div>
+    </div>
     </div>
   );
 }
