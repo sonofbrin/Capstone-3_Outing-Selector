@@ -9,6 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -26,8 +27,16 @@ public class OutingController {
     }
 
     @PostMapping(value = "restaurant")
-    Long addNewRestaurant(@RequestBody Restaurant restaurant) {
-        return restaurantDao.addRestaurant(restaurant);
+    List<Restaurant> addNewRestaurant(@RequestBody Restaurant[] restaurants) {
+        List<Restaurant> createdRestaurants = new ArrayList<>();
+        for (Restaurant restaurant : restaurants) {
+            Long id = restaurantDao.addRestaurant(restaurant);
+            if (id != null) {
+                restaurant.setId(id);
+                createdRestaurants.add(restaurant);
+            }
+        }
+        return createdRestaurants;
     }
 
     @GetMapping(value = "restaurant/{id}")

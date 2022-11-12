@@ -13,6 +13,7 @@ public class Restaurant {
     private String state;
     @NotBlank
     private String zip;
+    private String imgUrl;
 
     public Long getId() {
         return id;
@@ -60,5 +61,13 @@ public class Restaurant {
 
     public void setZip(String zip) {
         this.zip = zip;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 }

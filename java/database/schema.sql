@@ -32,6 +32,7 @@ CREATE TABLE restaurant (
     city varchar(250) NOT NULL,
     state varchar(250) NOT NULL,
     zip varchar(15) NOT NULL,
+	img_url varchar(250),
     CONSTRAINT PK_restaurant PRIMARY KEY(id)
 );
 

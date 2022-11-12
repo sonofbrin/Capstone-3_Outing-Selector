@@ -19,9 +19,9 @@ public class JdbcRestaurantDao implements RestaurantDao{
 
     @Override
     public Long addRestaurant(Restaurant restaurant) {
-        String insertRestaurant = "INSERT INTO restaurant (name, address, city, state, zip) VALUES(?, ?, ?, ?, ?) RETURNING id";
+        String insertRestaurant = "INSERT INTO restaurant (name, address, city, state, zip, img_url) VALUES(?, ?, ?, ?, ?, ?) RETURNING id";
         Long id = jdbcTemplate.queryForObject(insertRestaurant, Long.class, restaurant.getName(), restaurant.getAddress(),
-                restaurant.getCity(), restaurant.getState(), restaurant.getZip());
+                restaurant.getCity(), restaurant.getState(), restaurant.getZip(), restaurant.getImgUrl());
         return id;
     }
 
@@ -61,6 +61,7 @@ public class JdbcRestaurantDao implements RestaurantDao{
         restaurant.setCity(results.getString("city"));
         restaurant.setState(results.getString("state"));
         restaurant.setZip(results.getString("zip"));
+        restaurant.setImgUrl(results.getString("img_url"));
         return restaurant;
     }
 }
