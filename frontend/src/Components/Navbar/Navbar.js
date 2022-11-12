@@ -3,7 +3,8 @@ import { Switch, Route, Redirect, Link } from "react-router-dom";
 import { Nav, NavItem, NavLink } from "reactstrap";
 import Login from "../Login/Login";
 import Main from "../Main/Main";
-import "./navbar.css";
+import Home from "../Home/Home";
+import './navbar.css';
 
 export default function Navbar() {
   return (
@@ -16,13 +17,13 @@ export default function Navbar() {
       <div id="nav-buttons">
         <Nav>
           <NavItem>
-            <NavLink href="#">Home</NavLink>
+            <NavLink href="Home">Home</NavLink>
           </NavItem>
           <NavItem>
             <NavLink href="/homepage">Restuarant Options</NavLink>
           </NavItem>
           <NavItem>
-            <NavLink href="/login">Log In</NavLink>
+            <NavLink href="Login">Log In</NavLink>
           </NavItem>
           <NavItem>
             <NavLink href="/register">Register</NavLink>

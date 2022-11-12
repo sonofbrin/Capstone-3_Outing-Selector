@@ -1,10 +1,23 @@
-#navBar{
-    display: block;
+div a{
+    display: inline;
+    text-decoration: none;
 }
-
-NavLink {
-    
-    width: 50%;
+.nav-link{
+    display: inline;
+}
+#company-info{
+    display: flex;
+    flex-basis: 50%;
+}
+#nav{
+    display: flex;
+    flex-basis: 50%;
+}
+#nav-buttons{
+    flex-basis: 50%;
+}
+#navbar {
+    display: flex;
     border-radius: 5px;
     text-align: center;
     line-height: 50px;
