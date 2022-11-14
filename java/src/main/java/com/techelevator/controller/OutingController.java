@@ -27,7 +27,7 @@ public class OutingController {
     }
 
     @PostMapping(value = "restaurant")
-    List<Restaurant> addNewRestaurant(@RequestBody Restaurant[] restaurants) {
+    public List<Restaurant> addNewRestaurant(@RequestBody Restaurant[] restaurants) {
         List<Restaurant> createdRestaurants = new ArrayList<>();
         for (Restaurant restaurant : restaurants) {
             Long id = restaurantDao.addRestaurant(restaurant);
@@ -40,23 +40,23 @@ public class OutingController {
     }
 
     @GetMapping(value = "restaurant/{id}")
-    Restaurant getRestaurantById(@PathVariable Long id) {
+    public Restaurant getRestaurantById(@PathVariable Long id) {
         return restaurantDao.findRestaurantById(id);
     }
 
     @GetMapping(value = "restaurant/search")
-    List<Restaurant> getRestaurantsByLocation(@RequestParam String location) {
+    public List<Restaurant> getRestaurantsByLocation(@RequestParam String location) {
         return restaurantDao.findRestaurantsByLocation(location);
     }
 
     @PostMapping(value = "outing")
-    Long createNewOuting(@RequestBody Outing outing) {
+    public Long createNewOuting(@RequestBody Outing outing) {
         return outingDao.createNewOuting(outing);
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping(value = "outing")
-    List<Outing> getUserOutings(Principal principal) {
+    public List<Outing> getUserOutings(Principal principal) {
         Long userId = userDao.findByUsername(principal.getName()).getId();
         return outingDao.findOutingsByInviterId(userId);
     }

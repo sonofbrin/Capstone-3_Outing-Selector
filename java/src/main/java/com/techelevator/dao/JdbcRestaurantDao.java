@@ -8,6 +8,7 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -22,7 +23,8 @@ public class JdbcRestaurantDao implements RestaurantDao{
 
     @Override
     public Long addRestaurant(Restaurant restaurant) {
-        //TODO Add entries into restaurant_tag and hours tables
+        insertHours(restaurant.getRestaurantHours());
+        insertTagRefs(restaurant.getRestaurantTags());
         String insertRestaurant = "INSERT INTO restaurant (name, address, city, state, zip, img_url) VALUES(?, ?, ?, ?, ?, ?) RETURNING id";
         Long id = jdbcTemplate.queryForObject(insertRestaurant, Long.class, restaurant.getName(), restaurant.getAddress(),
                 restaurant.getCity(), restaurant.getState(), restaurant.getZip(), restaurant.getImgUrl());
@@ -52,12 +54,26 @@ public class JdbcRestaurantDao implements RestaurantDao{
         return restaurants;
     }
     private Hours findRestaurantHours(Long restaurantId) {
-        //TODO Return corresponding hours row for restaurant Id
-        return null;
+        String sql = "SELECT * FROM hours WHERE restaurant_id = ?";
+        return jdbcTemplate.queryForObject(sql, Hours.class, restaurantId);
     }
+
     private Set<TagRef> findRestaurantTags(Long restaurantId) {
-        // TODO Build a set of TagRefs with restaurant ids matching restaurant
-        return null;
+        Set<TagRef> tags = new HashSet<>();
+        String sql = "SELECT * FROM restaurant_tag WHERE restaurant_id = ?";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, restaurantId);
+        while (results.next()) {
+            tags.add(mapRowToTagRef(results));
+        }
+        return tags;
+    }
+
+    private TagRef mapRowToTagRef(SqlRowSet results) {
+        TagRef tag = new TagRef();
+        tag.setId(results.getLong("id"));
+        tag.setRestaurantId(results.getLong("restaurant_id"));
+        tag.setTagId(results.getLong("tag_id"));
+        return tag;
     }
 
     private Restaurant mapRowToRestaurant(SqlRowSet results) {
@@ -74,4 +90,15 @@ public class JdbcRestaurantDao implements RestaurantDao{
         return restaurant;
     }
 
+    private void insertHours(Hours hours) {
+        String insertHours = "INSERT INTO hours (restaurant_id, open, close) VALUES(?, ?, ?)";
+        jdbcTemplate.update(insertHours, hours.getRestaurantId(), hours.getOpenTime(), hours.getCloseTime());
+    }
+
+    private void insertTagRefs(Set<TagRef> tags) {
+        String insertTagRef = "INSERT INTO restaurant_tag (restaurant_id, tag_id) VALUES(?, ?)";
+        for (TagRef tag : tags) {
+            jdbcTemplate.update(insertTagRef, tag.getRestaurantId(), tag.getTagId());
+        }
+    }
 }
