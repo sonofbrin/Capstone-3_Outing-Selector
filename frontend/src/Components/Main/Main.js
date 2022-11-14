@@ -7,6 +7,7 @@ import {addToken, deleteUser} from '../../Redux/actionCreators'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import Navbar from '../Navbar/Navbar'
+import HeroBanner from '../Home/HeroBanner/HeroBanner'
 
 const mapStateToProps = state => {
     return {
@@ -34,6 +35,7 @@ class Main extends Component {
         return(
             <div>
                 <Navbar />
+                <HeroBanner />
                 <Home />
                 {this.props.token.token !== undefined ?
                         <div>

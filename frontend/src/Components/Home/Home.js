@@ -1,45 +1,39 @@
-import React from 'react';
-import {Link} from 'react-router-dom'
-import RestaurantCard from './RestaurantCard';
-import HeroBanner from './HeroBanner/HeroBanner';
+import React from "react";
+import { Link } from "react-router-dom";
+import RestaurantCard from "./RestaurantCard";
+import HeroBanner from "./HeroBanner/HeroBanner";
+import yelp from "./yelpAPI";
 
 function Home(props) {
+  const [restaurants, setRestaurants] = React.useState([yelp]);
 
-    const [restaurants, setRestaurants] = React.useState([]);
+  function searchRestaurants(search) {}
 
-    function searchRestaurants(search) {
-        
-    }
+  function showDetail(id) {
+    //Bring Restaurant Into Focus
+    console.log("Clicked restaurant id: " + id);
+  }
 
-    function showDetail(id) {
-        //Bring Restaurant Into Focus
-        console.log("Clicked restaurant id: " + id)
-    }
+  const restaurantElements = yelp.map((restaurant) => {
+    return (
+      <RestaurantCard
+        key={restaurant.id}
+        imageUrl={restaurant.image_url}
+        name={restaurant.name}
+        clickHandler={() => showDetail(restaurant.id)}
+      />
+    );
+  });
 
-    const restaurantElements = restaurants.map(restaurant => {
-        return (
-            <RestaurantCard
-                key = {restaurant.id}
-                imgUrl = {restaurant.imgUrl}
-                restaurantName = {restaurant.name}
-                clickHandler = {() => showDetail(restaurant.id)}
-            />
-        )
-    })
-
-    return(
-        <div className='home-container'>
-            <div className='hero-banner'>
-                <HeroBanner />
-            </div>
-            <div className='search'>
-                Search
-            </div>
-            <div className='restaurant-card-container'>
-                {restaurantElements}
-            </div>
-        </div>
-    )
+  return (
+    <div className="home-container">
+      <div className="hero-banner">
+        {/* <HeroBanner /> */}
+      </div>
+      <div className="search">Search</div>
+      <div className="restaurant-card-container">{restaurantElements}</div>
+    </div>
+  );
 }
 
 export default Home;

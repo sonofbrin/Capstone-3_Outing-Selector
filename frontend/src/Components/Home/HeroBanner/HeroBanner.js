@@ -5,7 +5,7 @@ import "./herobanner.css"
 function HeroBanner(){
     return(
         <>
-        <img src={hero} alt="Restaurant Dishes" />
+        <img src={hero} alt="Restaurant Dishes" id="herobanner"/>
         </>
     )
 }

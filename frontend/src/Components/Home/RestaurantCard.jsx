@@ -1,12 +1,15 @@
 import React from "react";
-import { Card, CardImg, CardTitle } from "reactstrap";
+import { Button, Card, CardImg, CardTitle } from "reactstrap";
 
 function RestaurantCard(props) {
     return (
-        <Card onClick={props.clickHandler}>
-            <CardImg src={props.imgUrl} alt={props.name}/>
+        <div className="card">
+        <Card>
+            <CardImg src={props.imageUrl} alt={props.name}/>
             <CardTitle>{props.name}</CardTitle>
+            <Button onClick={props.clickHandler}>Details</Button>
         </Card>
+        </div>
     )
 }
 
