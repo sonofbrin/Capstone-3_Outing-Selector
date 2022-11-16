@@ -23,11 +23,11 @@ public class JdbcRestaurantDao implements RestaurantDao{
 
     @Override
     public Long addRestaurant(Restaurant restaurant) {
-        insertHours(restaurant.getRestaurantHours());
-        insertTagRefs(restaurant.getRestaurantTags());
         String insertRestaurant = "INSERT INTO restaurant (name, address, city, state, zip, img_url) VALUES(?, ?, ?, ?, ?, ?) RETURNING id";
         Long id = jdbcTemplate.queryForObject(insertRestaurant, Long.class, restaurant.getName(), restaurant.getAddress(),
                 restaurant.getCity(), restaurant.getState(), restaurant.getZip(), restaurant.getImgUrl());
+        insertHours(id, restaurant.getRestaurantHours());
+        insertTagRefs(id, restaurant.getRestaurantTags());
         return id;
     }
 
@@ -90,15 +90,15 @@ public class JdbcRestaurantDao implements RestaurantDao{
         return restaurant;
     }
 
-    private void insertHours(Hours hours) {
+    private void insertHours(long restaurantId, Hours hours) {
         String insertHours = "INSERT INTO hours (restaurant_id, open, close) VALUES(?, ?, ?)";
-        jdbcTemplate.update(insertHours, hours.getRestaurantId(), hours.getOpenTime(), hours.getCloseTime());
+        jdbcTemplate.update(insertHours, restaurantId, hours.getOpenTime(), hours.getCloseTime());
     }
 
-    private void insertTagRefs(Set<TagRef> tags) {
+    private void insertTagRefs(long restaurantId, Set<TagRef> tags) {
         String insertTagRef = "INSERT INTO restaurant_tag (restaurant_id, tag_id) VALUES(?, ?)";
         for (TagRef tag : tags) {
-            jdbcTemplate.update(insertTagRef, tag.getRestaurantId(), tag.getTagId());
+            jdbcTemplate.update(insertTagRef, restaurantId, tag.getTagId());
         }
     }
 }

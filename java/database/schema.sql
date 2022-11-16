@@ -1,5 +1,6 @@
 BEGIN TRANSACTION;
 
+DROP TABLE IF EXISTS hours;
 DROP TABLE IF EXISTS favorite;
 DROP TABLE IF EXISTS outing_guest;
 DROP TABLE IF EXISTS restaurant_tag;
@@ -85,6 +86,15 @@ CREATE TABLE favorite (
     CONSTRAINT PK_favorite PRIMARY KEY(id),
     CONSTRAINT FK_favorite_user FOREIGN KEY(user_id) REFERENCES users(user_id),
     CONSTRAINT FK_favorite_restaurant FOREIGN KEY(restaurant_id) REFERENCES restaurant(id)
+);
+
+CREATE TABLE hours (
+    id serial,
+    restaurant_id int,
+    open time NOT NULL,
+    close time NOT NULL,
+    CONSTRAINT PK_hours PRIMARY KEY(id),
+    CONSTRAINT FK_hours_restaurant FOREIGN KEY(restaurant_id) REFERENCES restaurant(id)
 );
 
 INSERT INTO users (username,password_hash,role) VALUES ('user','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
