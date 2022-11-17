@@ -34,6 +34,8 @@ CREATE TABLE restaurant (
     state varchar(250) NOT NULL,
     zip varchar(15) NOT NULL,
 	img_url varchar(250),
+	open_time time NOT NULL,
+	close_time time NOT NULL,
     CONSTRAINT PK_restaurant PRIMARY KEY(id)
 );
 
