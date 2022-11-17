@@ -26,12 +26,29 @@ public class JdbcOutingDao implements OutingDao {
 
     @Override
     public Long createNewOuting(Outing outing) {
-        insertRestaurantRefs(outing.getOutingRestaurants());
-        insertGuestRefs(outing.getOutingGuests());
         String insertOuting = "INSERT INTO outing (inviter_id, date_time, decision_time) VALUES(?, ?, ?) RETURNING id";
         Long id = jdbcTemplate.queryForObject(insertOuting, Long.class, outing.getInviterId(), outing.getDateTime(),
                 outing.getDecisionTime());
         return id;
+    }
+
+    @Override
+    public Long insertGuestRef(GuestRef outingGuest) {
+        String insertGuestRef = "INSERT INTO outing_guest (outing_id, guest_email) VALUES(?, ?) RETURNING id";
+        return jdbcTemplate.queryForObject(insertGuestRef, Long.class, outingGuest.getOutingId(), outingGuest.getGuestEmail());
+//        for (GuestRef guestRef : outingGuests) {
+//            jdbcTemplate.update(insertGuestRefs, guestRef.getOutingId(), guestRef.getGuestEmail());
+//        }
+    }
+
+    @Override
+    public Long insertRestaurantRef(RestaurantRef outingRestaurant) {
+        String insertRestaurantRef = "INSERT INTO outing_restaurant (outing_id, restaurant_id, upvotes, downvotes) VALUES(?, ?, ?, ?) RETURNING id";
+        return jdbcTemplate.queryForObject(insertRestaurantRef, Long.class, outingRestaurant.getOutingId(),
+                outingRestaurant.getRestaurantId(), outingRestaurant.getUpvotes(), outingRestaurant.getDownvotes());
+//        for (RestaurantRef resRef : outingRestaurants) {
+//            jdbcTemplate.update(insertRestaurantRefs, resRef.getOutingId(), resRef.getRestaurantId());
+//        }
     }
 
     @Override
@@ -114,19 +131,5 @@ public class JdbcOutingDao implements OutingDao {
         guestRef.setOutingId(results.getLong("outing_id"));
         guestRef.setGuestEmail(results.getString("guest_email"));
         return guestRef;
-    }
-
-    private void insertRestaurantRefs(Set<RestaurantRef> outingRestaurants) {
-        String insertRestaurantRefs = "INSERT INTO outing_restaurant (outing_id, restaurant_id, upvotes, downvotes) VALUES(?, ?, 0, 0)";
-        for (RestaurantRef resRef : outingRestaurants) {
-            jdbcTemplate.update(insertRestaurantRefs, resRef.getOutingId(), resRef.getRestaurantId());
-        }
-    }
-
-    private void insertGuestRefs(Set<GuestRef> outingGuests) {
-        String insertGuestRefs = "INSERT INTO outing_guest (outing_id, guest_email) VALUES(?, ?)";
-        for (GuestRef guestRef : outingGuests) {
-            jdbcTemplate.update(insertGuestRefs, guestRef.getOutingId(), guestRef.getGuestEmail());
-        }
     }
 }

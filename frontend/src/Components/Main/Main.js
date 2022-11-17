@@ -36,7 +36,7 @@ class Main extends Component {
             <div>
                 <Navbar />
                 <HeroBanner />
-                <Home />
+                {/* <Home /> */}
                 {this.props.token.token !== undefined ?
                         <div>
                             <Link to='/home'>Home | </Link>

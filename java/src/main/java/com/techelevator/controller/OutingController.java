@@ -3,14 +3,15 @@ package com.techelevator.controller;
 import com.techelevator.dao.OutingDao;
 import com.techelevator.dao.RestaurantDao;
 import com.techelevator.dao.UserDao;
-import com.techelevator.model.Outing;
-import com.techelevator.model.Restaurant;
+import com.techelevator.model.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @CrossOrigin
@@ -34,6 +35,10 @@ public class OutingController {
             if (id != null) {
                 restaurant.setId(id);
                 createdRestaurants.add(restaurant);
+                for (TagRef restaurantTag: restaurant.getRestaurantTags()) {
+                    restaurantTag.setRestaurantId(restaurant.getId());
+                    restaurantTag.setId(restaurantDao.insertRestaurantTag(restaurantTag));
+                }
             }
         }
         return createdRestaurants;
@@ -50,8 +55,26 @@ public class OutingController {
     }
 
     @PostMapping(value = "outing")
-    public Long createNewOuting(@RequestBody Outing outing) {
-        return outingDao.createNewOuting(outing);
+    public Outing createNewOuting(@RequestBody Outing outing, @RequestParam String location) {
+        List<Restaurant> locationRestaurants = restaurantDao.findRestaurantsByLocation(location);
+        Set<RestaurantRef> outingRestaurants = new HashSet<>();
+        outing.setId(outingDao.createNewOuting(outing));
+        for (Restaurant restaurant : locationRestaurants) {
+            RestaurantRef restaurantRef = new RestaurantRef();
+            restaurantRef.setOutingId(outing.getId());
+            restaurantRef.setRestaurantId(restaurant.getId());
+            restaurantRef.setUpvotes((long) 0);
+            restaurantRef.setDownvotes((long) 0);
+            restaurantRef.setId(outingDao.insertRestaurantRef(restaurantRef));
+            outingRestaurants.add(restaurantRef);
+        }
+
+        for (GuestRef outingGuest : outing.getOutingGuests()) {
+            outingGuest.setOutingId(outing.getId());
+            outingGuest.setId(outingDao.insertGuestRef(outingGuest));
+        }
+        outing.setOutingRestaurants(outingRestaurants);
+        return outing;
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")

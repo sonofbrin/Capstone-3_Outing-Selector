@@ -1,6 +1,7 @@
 package com.techelevator.model;
 
 import javax.validation.constraints.NotBlank;
+import java.time.LocalTime;
 import java.util.Set;
 
 public class Restaurant {
@@ -15,8 +16,9 @@ public class Restaurant {
     @NotBlank
     private String zip;
     private String imgUrl;
+    private LocalTime openTime;
+    private LocalTime closeTime;
     private Set<TagRef> restaurantTags;
-    private Hours restaurantHours;
 
     public Long getId() {
         return id;
@@ -82,11 +84,19 @@ public class Restaurant {
         this.restaurantTags = restaurantTags;
     }
 
-    public Hours getRestaurantHours() {
-        return restaurantHours;
+    public LocalTime getOpenTime() {
+        return openTime;
     }
 
-    public void setRestaurantHours(Hours restaurantHours) {
-        this.restaurantHours = restaurantHours;
+    public void setOpenTime(LocalTime openTime) {
+        this.openTime = openTime;
+    }
+
+    public LocalTime getCloseTime() {
+        return closeTime;
+    }
+
+    public void setCloseTime(LocalTime closeTime) {
+        this.closeTime = closeTime;
     }
 }

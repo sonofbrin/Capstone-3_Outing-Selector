@@ -88,14 +88,6 @@ CREATE TABLE favorite (
     CONSTRAINT FK_favorite_restaurant FOREIGN KEY(restaurant_id) REFERENCES restaurant(id)
 );
 
-CREATE TABLE hours (
-    id serial,
-    restaurant_id int,
-    open time NOT NULL,
-    close time NOT NULL,
-    CONSTRAINT PK_hours PRIMARY KEY(id),
-    CONSTRAINT FK_hours_restaurant FOREIGN KEY(restaurant_id) REFERENCES restaurant(id)
-);
 
 INSERT INTO users (username,password_hash,role) VALUES ('user','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
 INSERT INTO users (username,password_hash,role) VALUES ('admin','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN');
