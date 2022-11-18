@@ -5,7 +5,7 @@ function RestaurantCard(props) {
     return (
         <div className="card">
         <Card>
-            <CardImg src={props.imageUrl} alt={props.name}/>
+            <CardImg src={props.imgUrl} alt={props.name}/>
             <CardTitle>{props.name}</CardTitle>
             <Button onClick={props.clickHandler}>Details</Button>
         </Card>

@@ -7,7 +7,7 @@ import Home from "../Home/Home";
 import Register from "../Register/Register";
 import './navbar.css';
 
-export default function Navbar() {
+export default function Navbar(props) {
   return (
     <div id= "navBar">
       <div id="nav">
@@ -17,16 +17,18 @@ export default function Navbar() {
       <div id="nav-buttons">
         <Nav>
           <NavItem>
-            <NavLink href="Home">Home</NavLink>
+            <NavLink to="/home" >Home</NavLink>
           </NavItem>
           <NavItem>
-            <NavLink href="/homepage">Restaurant Options</NavLink>
+            <NavLink to="/homepage">Restaurant Options</NavLink>
           </NavItem>
           <NavItem>
-            <NavLink href="Login">Log In</NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink href="Register">Register</NavLink>
+            {
+              props.token !== undefined ?
+                <NavLink to="/login" >Log Out</NavLink>
+              :
+                <NavLink href="Login">Log In</NavLink>
+            }
           </NavItem>
         </Nav>
       </div>

@@ -2,6 +2,7 @@ package com.techelevator.dao;
 
 import com.techelevator.model.Hours;
 import com.techelevator.model.Restaurant;
+import com.techelevator.model.Tag;
 import com.techelevator.model.TagRef;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -63,6 +64,34 @@ public class JdbcRestaurantDao implements RestaurantDao{
         return restaurants;
     }
 
+    @Override
+    public Long addTag(Tag tag) {
+        String sql = "INSERT INTO tag (name) VALUES(?) RETURNING id";
+        return jdbcTemplate.queryForObject(sql, Long.class, tag.getName());
+    }
+
+    @Override
+    public List<Tag> getAllTags() {
+        List<Tag> tags = new ArrayList<>();
+        String sql = "SELECT * FROM tag";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+        while (results.next()) {
+            tags.add(mapRowToTag(results));
+        }
+        return tags;
+    }
+
+    @Override
+    public Tag getTagById(Long id) {
+        String sql = "SELECT * FROM tag WHERE id=?";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, id);
+        if (results.next()) {
+            return mapRowToTag(results);
+        } else {
+            throw new RuntimeException("Tag id: " + id + " not found.");
+        }
+    }
+
     private Set<TagRef> findRestaurantTags(Long restaurantId) {
         Set<TagRef> tags = new HashSet<>();
         String sql = "SELECT * FROM restaurant_tag WHERE restaurant_id = ?";
@@ -78,6 +107,13 @@ public class JdbcRestaurantDao implements RestaurantDao{
         tag.setId(results.getLong("id"));
         tag.setRestaurantId(results.getLong("restaurant_id"));
         tag.setTagId(results.getLong("tag_id"));
+        return tag;
+    }
+
+    private Tag mapRowToTag(SqlRowSet rs) {
+        Tag tag = new Tag();
+        tag.setId(rs.getLong("id"));
+        tag.setName(rs.getString("name"));
         return tag;
     }
 
