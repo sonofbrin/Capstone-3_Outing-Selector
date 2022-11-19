@@ -39,7 +39,7 @@ class Main extends Component {
                         Restaurant Tinder
                     </NavbarBrand>
                     <NavLink to='/home'>Home</NavLink>
-                    <NavLink to='/outing'>My Outings</NavLink>
+                    {this.props.token.token && <NavLink to='/outing'>My Outings</NavLink>}
                     {
                         this.props.token.token !== undefined ?
                             <NavLink to='/login' onClick={this.handleLogout}>Log Out</NavLink>
@@ -52,7 +52,7 @@ class Main extends Component {
                     <Route path='/login' component={() => <Login/>}/>
                     <Route path='/register'component={() => <Register/>}/>
                     <Route path='/home' component={() => <Home/>}/>
-                    <Route path='/outing' component={() => <Outing/>} />
+                    <Route path='/outing' component={() => <Outing userToken={this.props.token.token}/>} />
                     <Redirect to='/home'/>
                 </Switch>
             </div>

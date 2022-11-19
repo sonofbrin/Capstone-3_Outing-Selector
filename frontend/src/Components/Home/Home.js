@@ -4,11 +4,13 @@ import HeroBanner from "./HeroBanner/HeroBanner";
 import axios from "axios";
 import { Button, Form, FormGroup, Input } from "reactstrap";
 import { baseUrl } from "../../Shared/baseUrl";
+import RestaurantDetail from "./RestaurantDetail";
 
 function Home(props) {
 
   const [searchLocation, setSearchLocation] = React.useState('');
   const [restaurants, setRestaurants] = React.useState([]);
+  const [selectedRestaurant, setSelectedRestaurant] = React.useState(null);
 
   function handleSearch(event) {
     event.preventDefault();
@@ -30,14 +32,20 @@ function Home(props) {
   function showDetail(id) {
     //Bring Restaurant Into Focus
     console.log("Clicked restaurant id: " + id);
+    setSelectedRestaurant(restaurants.find( restaurant => {
+      return restaurant.id === id;
+    }))
+  }
+
+  function deselectRestaurant() {
+    setSelectedRestaurant(null);
   }
 
   const restaurantElements = restaurants.map((restaurant) => {
     return (
       <RestaurantCard
         key={restaurant.id}
-        imgUrl={restaurant.imgUrl}
-        name={restaurant.name}
+        restaurant={restaurant}
         clickHandler={() => showDetail(restaurant.id)}
       />
     );
@@ -63,7 +71,12 @@ function Home(props) {
           <Button color="primary" type="submit" onClick={handleSearch}>Search</Button>
         </Form>
       </div>
-      <div className="restaurant-card-container">{restaurantElements}</div>
+      <div className="restaurant-card-container">
+        {restaurantElements}
+      </div>
+      <div className="restaurant-detail">
+        {selectedRestaurant !== null && <RestaurantDetail restaurant={selectedRestaurant} unfocusHandler={deselectRestaurant} />}
+      </div>
     </div>
   );
 }

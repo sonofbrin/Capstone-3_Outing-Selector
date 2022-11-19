@@ -5,8 +5,8 @@ function RestaurantCard(props) {
     return (
         <div className="card">
         <Card>
-            <CardImg src={props.imgUrl} alt={props.name}/>
-            <CardTitle>{props.name}</CardTitle>
+            <CardImg src={props.restaurant.imgUrl} alt={props.restaurant.name}/>
+            <CardTitle>{props.restaurant.name}</CardTitle>
             <Button onClick={props.clickHandler}>Details</Button>
         </Card>
         </div>

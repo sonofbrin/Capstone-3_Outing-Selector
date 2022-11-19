@@ -1,14 +1,16 @@
 import React from "react";
-import { Card, CardImg, CardText, CardTitle } from "reactstrap";
+import { Button, Card, CardImg, CardText, CardTitle } from "reactstrap";
 
 function RestaurantDetail(props) {
     return (
         <Card>
-            <CardImg src={props.imgUrl} alt={props.name}/>
-            <CardTitle>{props.name}</CardTitle>
-            <CardText>{props.address}</CardText>
-            <CardText>{props.city + ', ' + props.state}</CardText>
-            <CardText>{props.zip}</CardText>
+            <CardImg src={props.restaurant.imgUrl} alt={props.restaurant.name}/>
+            <CardTitle>{props.restaurant.name}</CardTitle>
+            <CardText>{props.restaurant.address}</CardText>
+            <CardText>{props.restaurant.city + ', ' + props.restaurant.state}</CardText>
+            <CardText>{props.restaurant.zip}</CardText>
+            <Button onClick={console.log('Under Construction')}>Invite</Button>
+            <Button onClick={props.unfocusHandler}>Close</Button>
         </Card>
     )
 }
