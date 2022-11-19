@@ -21,4 +21,6 @@ public interface OutingDao {
     Outing findOutingById(Long id);
 
     List<Outing> findCurrentOutings(Long inviterId, LocalDateTime decision_time);
+
+    Long updateVoteCount(long outingId, long restaurantId, boolean selectedUpvote, boolean willIncrement);
 }

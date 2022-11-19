@@ -75,7 +75,17 @@ public class JdbcOutingDao implements OutingDao {
 
     @Override
     public List<Outing> findCurrentOutings(Long inviterId, LocalDateTime currentLocalTime) {
+        //TODO
         return null;
+    }
+
+    @Override
+    public Long updateVoteCount(long outingId, long restaurantId, boolean selectedUpvote, boolean willIncrement) {
+        String target = selectedUpvote ? "upvote" : "downvote";
+        //TODO this feels really weird and I'm wondering if it could just be accomplished same way as with the numerical values
+        String updateCount = String.format("UPDATE outing_restaurant SET %s = %s + ?" +
+                " WHERE outing_id = ? AND restaurant_id = ? RETURNING %s", target, target, target);
+        return jdbcTemplate.queryForObject(updateCount, Long.class,willIncrement ? 1 : -1, outingId, restaurantId);
     }
 
     private Set<RestaurantRef> findOutingRestaurants(Long outingId) {

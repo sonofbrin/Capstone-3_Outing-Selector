@@ -81,6 +81,13 @@ public class OutingController {
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")
+    @PostMapping(value = "outing/{outingId}/{restaurantId}")
+    public Long updateVoteCount(@PathVariable long outingId, @PathVariable long restaurantId,
+                                @RequestParam boolean selectedUpvote, @RequestParam boolean willIncrement) {
+        return outingDao.updateVoteCount(outingId, restaurantId, selectedUpvote, willIncrement);
+    }
+
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping(value = "outing")
     public List<Outing> getUserOutings(Principal principal) {
         Long userId = userDao.findByUsername(principal.getName()).getId();
