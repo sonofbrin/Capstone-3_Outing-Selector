@@ -3,10 +3,12 @@
     height: 400px;
 }
 .card{
-    width: 175px;
+    width: 250px;
     font-size: 15px;
     display: flex;
    justify-content: flex-end;
+   margin-right: 10px;
+   margin-left: 5px;
 }
 .card-img{
     height: 125px;
