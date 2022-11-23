@@ -24,14 +24,30 @@ class Register extends Component{
         })
     }
 
+    goodPassword = (password) => {
+        const uppercaseRegExp   = /(?=.*?[A-Z])/;
+        const lowercaseRegExp   = /(?=.*?[a-z])/;
+        const digitsRegExp      = /(?=.*?[0-9])/;
+        const minLengthRegExp   = /.{8,}/;
+        if(password.match(uppercaseRegExp) && password.match(lowercaseRegExp) && password.match(digitsRegExp) && password.match(minLengthRegExp)){
+            return true;
+        }
+        return false;
+    }
+
     handleSubmit = (event) => {
         event.preventDefault()
         const data = {username: this.state.username, password: this.state.password, confirmPassword: this.state.confirmPassword, role: 'USER'}
-        if(this.state.password === this.state.confirmPassword){
+        if(!this.goodPassword(this.state.password)){
+            console.log(this.state.password)
+            alert("try again")
+        }else if(this.state.password === this.state.confirmPassword){
             axios.post(baseUrl + "/register", data).then(response => alert(response.data))
-        }else{
+        }
+        else{
             alert("Password and Confirm Password must match!!!")
         }
+        
     }
 
     render(){
