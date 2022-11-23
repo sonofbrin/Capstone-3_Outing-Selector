@@ -39,10 +39,9 @@ class Register extends Component{
         event.preventDefault()
         const data = {username: this.state.username, password: this.state.password, confirmPassword: this.state.confirmPassword, role: 'USER'}
         if(!this.goodPassword(this.state.password)){
-            console.log(this.state.password)
-            alert("try again")
+            alert("one capital letter, one lower, one number, minimum of 8 characters")
         }else if(this.state.password === this.state.confirmPassword){
-            axios.post(baseUrl + "/register", data).then(response => alert(response.data))
+            axios.post(baseUrl + "/register", data).catch(() => alert("email already in use"))
         }
         else{
             alert("Password and Confirm Password must match!!!")
