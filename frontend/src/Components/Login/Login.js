@@ -7,6 +7,7 @@ import {baseUrl} from '../../Shared/baseUrl'
 import axios from 'axios'
 import { Button, Form, FormGroup, Input } from 'reactstrap'
 import './login.css';
+import { func } from 'prop-types'
 
 
 const mapDispatchToProps = (dispatch) => ({
@@ -31,16 +32,18 @@ class Login extends Component {
         const data = { username: this.state.username, password: this.state.password };
         
 
-        const userWithToken = await axios.post(baseUrl + '/login', data)
-
+        const userWithToken = await axios.post(baseUrl + '/login', data).catch(()=>{alert('incorrect login credintials')})
         
-        await this.props.dispatch(addToken(userWithToken.data.token))
-        await this.props.dispatch(addUser(userWithToken.data.user));
-    }
+        if(userWithToken !== undefined){
+            await this.props.dispatch(addToken(userWithToken.data.token))
+            await this.props.dispatch(addUser(userWithToken.data.user));
+        }
+        
+       
+        }
 
     handleInputChange = (event) => {
         event.preventDefault()
-        console.log("sending info")
         this.setState({
             [event.target.name]: event.target.value
         })
@@ -52,7 +55,6 @@ class Login extends Component {
                 <Form className='loginForm'>
                 <h1>Please Sign In</h1>
                 <FormGroup>
-                {/**<Label class="sr-only">Username</Label>*/}
                 <Input
                     type="email"
                     id="username"
