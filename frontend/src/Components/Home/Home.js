@@ -21,6 +21,7 @@ function Home(props) {
   const [modal, setModal] = React.useState(false);
 
   const toggle = () => setModal(!modal);
+  const date = new Date();
 
   function handleSearch(event) {
     event.preventDefault();
@@ -37,19 +38,26 @@ function Home(props) {
     setSearchLocation(() => event.target.value);
   }
 
+  function isOpen(open, close) {
+    let hour = date.getHours().toString();
+    let min = date.getMinutes().toString();
+    const currentTime = (hour+":"+min+":00")
+    
+    if ((currentTime) > open && (currentTime) < close) {
+      return "Open Now";
+    }else{
+      
+      return "Closed Now"}
+  }
+
   function showDetail(id) {
     //Bring Restaurant Into Focus
-    console.log("Clicked restaurant id: " + id);
     setSelectedRestaurant(
       restaurants.find((restaurant) => {
         toggle();
         return restaurant.id === id;
       })
     );
-  }
-
-  function deselectRestaurant() {
-    setSelectedRestaurant(null);
   }
 
   const restaurantElements = restaurants.map((restaurant) => {
@@ -119,7 +127,10 @@ function Home(props) {
                   ", " +
                   selectedRestaurant.zip}
               </ModalBody>
-
+              <ModalBody>
+                {isOpen(selectedRestaurant.openTime,
+                selectedRestaurant.closeTime)}
+              </ModalBody>
               <Button onClick={console.log(" Under Construction ")}>
                 Invite
               </Button>
