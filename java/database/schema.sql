@@ -1,6 +1,5 @@
 BEGIN TRANSACTION;
 
-DROP TABLE IF EXISTS hours;
 DROP TABLE IF EXISTS favorite;
 DROP TABLE IF EXISTS outing_guest;
 DROP TABLE IF EXISTS restaurant_tag;
@@ -76,7 +75,7 @@ CREATE TABLE restaurant_tag (
 CREATE TABLE outing_guest (
     id serial,
     outing_id int,
-    guest_email varchar(100) UNIQUE,
+    guest_email varchar(100),
     CONSTRAINT PK_outing_guest PRIMARY KEY(id),
     CONSTRAINT FK_outing_guest_outing FOREIGN KEY(outing_id) REFERENCES outing(id)
 );
