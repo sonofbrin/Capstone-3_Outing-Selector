@@ -1,19 +1,13 @@
 package com.techelevator.dao;
 
-import com.techelevator.model.GuestRef;
-import com.techelevator.model.Outing;
-import com.techelevator.model.RestaurantRef;
-import com.techelevator.model.TagRef;
+import com.techelevator.model.*;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class JdbcOutingDao implements OutingDao {
@@ -33,9 +27,17 @@ public class JdbcOutingDao implements OutingDao {
     }
 
     @Override
-    public Long insertGuestRef(GuestRef outingGuest) {
-        String insertGuestRef = "INSERT INTO outing_guest (outing_id, guest_email) VALUES(?, ?) RETURNING id";
-        return jdbcTemplate.queryForObject(insertGuestRef, Long.class, outingGuest.getOutingId(), outingGuest.getGuestEmail());
+    public GuestId insertGuestRef(GuestRef outingGuest) {
+        String insertGuestRef = "INSERT INTO outing_guest (id, outing_id, guest_email) VALUES(?, ?, ?)";
+        UUID uuid = UUID.randomUUID();
+        GuestId id = new GuestId(uuid);
+        outingGuest.setId(id);
+        int rowsCreated = jdbcTemplate.update(insertGuestRef, outingGuest.getId().getId(), outingGuest.getOutingId(), outingGuest.getGuestEmail());
+        if (rowsCreated == 1) {
+            outingGuest.setId(id);
+            return outingGuest.getId();
+        }
+        return null;
 //        for (GuestRef guestRef : outingGuests) {
 //            jdbcTemplate.update(insertGuestRefs, guestRef.getOutingId(), guestRef.getGuestEmail());
 //        }
@@ -74,18 +76,20 @@ public class JdbcOutingDao implements OutingDao {
     }
 
     @Override
-    public List<Outing> findCurrentOutings(Long inviterId, LocalDateTime currentLocalTime) {
-        //TODO
-        return null;
+    public Long updateVoteCount(Long outingRestaurantId, boolean selectedUpvote) {
+        String target = selectedUpvote ? "upvotes" : "downvotes";
+        String updateCount = String.format("UPDATE outing_restaurant SET %s = %s + 1" +
+                " WHERE id = ? RETURNING %s", target, target, target);
+        return jdbcTemplate.queryForObject(updateCount, Long.class, outingRestaurantId);
     }
 
-    @Override
-    public Long updateVoteCount(long outingId, long restaurantId, boolean selectedUpvote, boolean willIncrement) {
-        String target = selectedUpvote ? "upvote" : "downvote";
-        //TODO this feels really weird and I'm wondering if it could just be accomplished same way as with the numerical values
-        String updateCount = String.format("UPDATE outing_restaurant SET %s = %s + ?" +
-                " WHERE outing_id = ? AND restaurant_id = ? RETURNING %s", target, target, target);
-        return jdbcTemplate.queryForObject(updateCount, Long.class,willIncrement ? 1 : -1, outingId, restaurantId);
+    public GuestRef findOutingGuestById(UUID guestId) {
+        String sql = "SELECT * FROM outing_guest WHERE id = ?";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, guestId);
+        if (results.next()) {
+            return mapRowToGuestRef(results);
+        }
+        return null;
     }
 
     private Set<RestaurantRef> findOutingRestaurants(Long outingId) {
@@ -137,7 +141,7 @@ public class JdbcOutingDao implements OutingDao {
 
     private GuestRef mapRowToGuestRef(SqlRowSet results) {
         GuestRef guestRef = new GuestRef();
-        guestRef.setId(results.getLong("id"));
+        guestRef.setId(GuestId.fromString(results.getString("id")));
         guestRef.setOutingId(results.getLong("outing_id"));
         guestRef.setGuestEmail(results.getString("guest_email"));
         return guestRef;

@@ -73,7 +73,7 @@ CREATE TABLE restaurant_tag (
 );
 
 CREATE TABLE outing_guest (
-    id serial,
+    id uuid,
     outing_id int,
     guest_email varchar(100),
     CONSTRAINT PK_outing_guest PRIMARY KEY(id),

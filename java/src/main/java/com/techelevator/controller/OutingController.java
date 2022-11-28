@@ -80,11 +80,10 @@ public class OutingController {
         return outing;
     }
 
-    @PreAuthorize("hasRole('ROLE_USER')")
-    @PostMapping(value = "outing/{outingId}/{restaurantId}")
-    public Long updateVoteCount(@PathVariable long outingId, @PathVariable long restaurantId,
-                                @RequestParam boolean selectedUpvote, @RequestParam boolean willIncrement) {
-        return outingDao.updateVoteCount(outingId, restaurantId, selectedUpvote, willIncrement);
+//    @PreAuthorize("hasRole('ROLE_USER')")
+    @PostMapping(value = "outing/restaurant")
+    public Long updateVoteCount(@RequestBody RestaurantRef outingRestaurant, @RequestParam boolean selectedUpvote) {
+        return outingDao.updateVoteCount(outingRestaurant.getId(), selectedUpvote);
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")
@@ -108,5 +107,11 @@ public class OutingController {
     @GetMapping(value = "tag/{id}")
     public Tag getTagById(@PathVariable Long id) {
         return restaurantDao.getTagById(id);
+    }
+
+    @GetMapping(value = "guest")
+    public Outing getOutingAsGuest(@RequestParam GuestId id) {
+        Long outingId = outingDao.findOutingGuestById(id.getId()).getOutingId();
+        return outingDao.findOutingById(outingId);
     }
 }

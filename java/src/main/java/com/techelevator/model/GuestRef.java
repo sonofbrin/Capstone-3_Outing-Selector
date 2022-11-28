@@ -1,15 +1,16 @@
 package com.techelevator.model;
 
+
 public class GuestRef {
-    private Long id;
+    private GuestId id;
     private Long outingId;
     private String guestEmail;
 
-    public Long getId() {
+    public GuestId getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(GuestId id) {
         this.id = id;
     }
 
