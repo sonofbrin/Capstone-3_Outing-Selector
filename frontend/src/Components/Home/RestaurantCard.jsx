@@ -7,7 +7,7 @@ function RestaurantCard(props) {
         <Card>
             <CardImg src={props.restaurant.imgUrl} alt={props.restaurant.name} className="card-img"/>
             <CardTitle>{props.restaurant.name}</CardTitle>
-            <Button onClick={props.clickHandler}>Details</Button>
+            <Button onClick={props.clickHandler} id = "detail_button">Details</Button>
         </Card>
         </div>
     )
