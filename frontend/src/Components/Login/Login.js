@@ -32,7 +32,7 @@ class Login extends Component {
         const data = { username: this.state.username, password: this.state.password };
         
 
-        const userWithToken = await axios.post(baseUrl + '/login', data).catch(()=>{alert('incorrect login credintials')})
+        const userWithToken = await axios.post(baseUrl + '/login', data).catch(()=>{alert('Incorrect login credentials')})
         
         if(userWithToken !== undefined){
             await this.props.dispatch(addToken(userWithToken.data.token))

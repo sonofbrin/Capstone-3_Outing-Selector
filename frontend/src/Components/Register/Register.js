@@ -41,7 +41,13 @@ class Register extends Component{
         if(!this.goodPassword(this.state.password)){
             alert("one capital letter, one lower, one number, minimum of 8 characters")
         }else if(this.state.password === this.state.confirmPassword){
-            axios.post(baseUrl + "/register", data).catch(() => alert("email already in use"))
+            axios.post(baseUrl + "/register", data)
+                .then(response => {
+                    if (response.status === 201) {
+                        alert("Account created successfully")
+                    }
+                })
+                .catch((error) => alert(error.response.data.message))
         }
         else{
             alert("Password and Confirm Password must match!!!")

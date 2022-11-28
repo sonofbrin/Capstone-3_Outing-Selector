@@ -8,6 +8,7 @@ import {addToken, deleteUser} from '../../Redux/actionCreators'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import { Navbar, NavbarBrand } from 'reactstrap'
+import GuestOuting from '../Outing/GuestOuting'
 
 const mapStateToProps = state => {
     return {
@@ -53,6 +54,7 @@ class Main extends Component {
                     <Route path='/register'component={() => <Register/>}/>
                     <Route path='/home' component={() => <Home/>}/>
                     <Route path='/outing' component={() => <Outing userToken={this.props.token.token}/>} />
+                    <Route path='/guest/:guestId' component={({match}) => <GuestOuting guestId={match.params.guestId}/>}/>
                     <Redirect to='/home'/>
                 </Switch>
             </div>
