@@ -1,6 +1,7 @@
 import React from "react";
 import RestaurantCard from "./RestaurantCard";
 import HeroBanner from "./HeroBanner/HeroBanner";
+import Invitation from "./Invitation"
 import axios from "axios";
 import {
   Button,
@@ -140,6 +141,7 @@ function Home(props) {
           )}
         </div>
       </div>
+      {/* <Invitation /> */}
     </div>
   );
 }
