@@ -15,6 +15,8 @@ public class Restaurant {
     private String state;
     @NotBlank
     private String zip;
+    private String phoneNumber;
+    private String webPage;
     private String imgUrl;
     private LocalTime openTime;
     private LocalTime closeTime;
@@ -62,6 +64,22 @@ public class Restaurant {
 
     public String getZip() {
         return zip;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getWebPage() {
+        return webPage;
+    }
+
+    public void setWebPage(String webPage) {
+        this.webPage = webPage;
     }
 
     public void setZip(String zip) {
