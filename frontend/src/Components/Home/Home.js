@@ -21,6 +21,7 @@ function Home(props) {
   const [restaurants, setRestaurants] = React.useState([]);
   const [selectedRestaurant, setSelectedRestaurant] = React.useState(null);
   const [modal, setModal] = React.useState(false);
+  const [showInvite, setShowInvite] = React.useState(false);
 
   const toggle = () => setModal(!modal);
   const date = new Date();
@@ -72,6 +73,11 @@ function Home(props) {
     );
   });
 
+  function toggleInvite(event) {
+    event.preventDefault();
+    setShowInvite(prevShow => !prevShow);
+  }
+
   return (
     <div className="home-container">
       <div className="hero-banner">
@@ -94,6 +100,12 @@ function Home(props) {
         </Form>
       </div>
       <div className="restaurant-card-container">
+        {
+          restaurants.length > 0 &&
+          <Button onClick={toggleInvite}>
+            Invite Guests
+          </Button>
+        }
         {restaurantElements}
         {selectedRestaurant !== null && (
           <RestaurantDetail
@@ -133,15 +145,15 @@ function Home(props) {
                 {isOpen(selectedRestaurant.openTime,
                 selectedRestaurant.closeTime)}
               </ModalBody>
-              <Button onClick={console.log(" Under Construction ")}>
-                Invite
-              </Button>
               <Button onClick={toggle}>Close</Button>
             </Modal>
           )}
         </div>
       </div>
-      {/* <Invitation /> */}
+      <Invitation 
+        show={showInvite}
+        toggle={toggleInvite}
+      />
     </div>
   );
 }

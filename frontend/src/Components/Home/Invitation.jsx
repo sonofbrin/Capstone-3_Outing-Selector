@@ -13,11 +13,34 @@ import {
 
 export default function Invitation(props) {
 
-    const [emails, setEmails] = React.useState(["asdf"]);
+    const [formData, setFormData] = React.useState(
+        {
+            outingTime: "",
+            decisionDeadline: "",
+            guestEmail: "",
+            emails: []
+        }
+    );
+
+    const emailElements = formData.emails.map(email => <li>{email}</li>);
 
     function addEmail(event) {
-        event.preventDefault();
-        setEmails((prevEmails) => [event.target.value, ...prevEmails])
+        // event.preventDefault();
+        if (formData.guestEmail !== "") {
+            setFormData(prevFormData => ({
+                ...prevFormData,
+                guestEmail: "",
+                emails: [prevFormData.guestEmail, ...prevFormData.emails]
+            }));
+        }
+    }
+
+    function handleInputChange(event) {
+        const {name, value} = event.target;
+        setFormData(prevFormData => ({
+            ...prevFormData,
+            [name]: value
+        }));
     }
 
     function createOuting(event) {
@@ -30,42 +53,45 @@ export default function Invitation(props) {
             className="invitation"
             style={{display: 'block', width: 700, padding: 30}}
         >
-            <Modal isOpen={true} >
+            {console.log(formData)}
+            <Modal isOpen={props.show} toggle={props.toggleInvite}>
                 <ModalHeader>
                     Choose guests and times
                 </ModalHeader>
                 <ModalBody>
-                    <Form>
+                    <Form onSubmit={createOuting}>
                         <FormGroup row>
                             <Label
-                                for="outing-date"
+                                for="outing-time"
                                 sm={4}
                             >
-                                Outing date
+                                Meeting time
                             </Label>
                             <Col>
                                 <Input
-                                    type="datetime"
-                                    id="outing-date"
-                                    name="outing-date"
-                                    // onChange={handleInputChange}
+                                    type="datetime-local"
+                                    id="outing-time"
+                                    name="outingTime"
+                                    value={formData.outingTime}
+                                    onChange={handleInputChange}
                                 />
                             </Col>
                         </FormGroup>
 
                         <FormGroup row>
                             <Label
-                                for="decision-date"
+                                for="decision-deadline"
                                 sm={4}
                             >
                                 Decision deadline
                             </Label>
                             <Col>
                                 <Input
-                                    type="date"
-                                    id="decision-date"
-                                    name="decision-date"
-                                    // onChange={handleInputChange}
+                                    type="datetime-local"
+                                    id="decision-deadline"
+                                    name="decisionDeadline"
+                                    value={formData.decisionDeadline}
+                                    onChange={handleInputChange}
                                 />
                             </Col>
                         </FormGroup>
@@ -75,28 +101,30 @@ export default function Invitation(props) {
                                 for="guest-email"
                                 sm={4}
                             >
-                                Guest email(s)
+                                Add guest email(s)
                             </Label>
                             <Col sm={6}>
                                 <Input
                                     type="email"
                                     id="guest-email"
-                                    name="guest-email"
+                                    name="guestEmail"
                                     placeholder="guest@email.com"
-
-                                    // onChange={handleInputChange}
+                                    value={formData.guestEmail}
+                                    onChange={handleInputChange}
                                 />
-                                {emails}
+                                <ul style={{listStyleType: "none"}}>
+                                    {emailElements}
+                                </ul>
                             </Col>
                             <Col sm={2}>
-                                <Button onClick={addEmail}>
+                                <Button type="button" onClick={addEmail}>
                                     +
                                 </Button>
                             </Col>
                         </FormGroup>
 
 
-                        <Button color="primary" type="submit" onClick={createOuting}>
+                        <Button color="primary">
                             Send Invitations
                         </Button>
                     </Form>

@@ -32,13 +32,6 @@ function RestaurantDetail(props) {
             props.restaurant.zip}
         </ModalBody>
 
-        <Button
-        //   onClick={console.log(
-        //     props.restaurant.imgUrl + " Under Construction "
-        //   )}
-        >
-          Invite
-        </Button>
         <Button onClick={props.toggle}>Close</Button>
       </Modal>
     </div>
