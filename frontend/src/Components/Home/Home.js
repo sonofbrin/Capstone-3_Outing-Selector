@@ -68,7 +68,7 @@ function Home(props) {
   });
 
   function toggleInvite(event) {
-    event.preventDefault();
+    // event.preventDefault();
     setShowInvite(prevShow => !prevShow);
   }
 
@@ -117,6 +117,8 @@ function Home(props) {
       <Invitation 
         show={showInvite}
         toggle={toggleInvite}
+        location={searchLocation}
+        token={props.token}
       />
     </div>
   );

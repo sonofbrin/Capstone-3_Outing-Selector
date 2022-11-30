@@ -1,14 +1,9 @@
 import React from "react";
 import {
   Button,
-  Card,
-  CardImg,
-  CardText,
-  CardTitle,
   Modal,
   ModalBody,
   ModalHeader,
-  ModalTitle,
 } from "reactstrap";
 
 function RestaurantDetail(props) {

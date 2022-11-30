@@ -1,3 +1,4 @@
+import axios from "axios";
 import React from "react";
 import {
     Button,
@@ -10,6 +11,7 @@ import {
     ModalBody,
     ModalHeader,
   } from "reactstrap";
+  import { baseUrl } from "../../Shared/baseUrl";
 
 export default function Invitation(props) {
 
@@ -45,7 +47,22 @@ export default function Invitation(props) {
 
     function createOuting(event) {
         event.preventDefault();
-
+        const config = {
+            headers: { Authorization: `Bearer ${props.token}` }
+        }
+        const data = {
+            dateTime: formData.outingTime,
+            decisionTime: formData.decisionDeadline,
+            outingGuests: formData.emails.map(email => ({"guestEmail": email}))
+        }
+        axios.post(baseUrl + "/outing?location=" + props.location, data, config)
+        .then(response => {
+            if (response.status === 201) {
+                alert("Outing created successfully")
+            }
+        })
+        .catch((error) => alert(error.response.data.message))
+        props.toggle();
     }
 
     return (

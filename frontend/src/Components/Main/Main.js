@@ -52,7 +52,7 @@ class Main extends Component {
                 <Switch>
                     <Route path='/login' component={() => <Login/>}/>
                     <Route path='/register'component={() => <Register/>}/>
-                    <Route path='/home' component={() => <Home/>}/>
+                    <Route path='/home' component={() => <Home token={this.props.token.token}/>}/>
                     <Route path='/outing' component={() => <Outing userToken={this.props.token.token}/>} />
                     <Route path='/guest/:guestId' component={({match}) => <GuestOuting guestId={match.params.guestId}/>}/>
                     <Redirect to='/home'/>
