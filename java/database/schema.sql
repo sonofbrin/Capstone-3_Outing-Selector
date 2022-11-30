@@ -32,6 +32,8 @@ CREATE TABLE restaurant (
     city varchar(250) NOT NULL,
     state varchar(250) NOT NULL,
     zip varchar(15) NOT NULL,
+	phone_number char(10),
+	web_page varchar(250),
 	img_url varchar(250),
 	open_time time NOT NULL,
 	close_time time NOT NULL,
