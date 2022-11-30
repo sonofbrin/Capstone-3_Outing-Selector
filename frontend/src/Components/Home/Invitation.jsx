@@ -53,10 +53,9 @@ export default function Invitation(props) {
             className="invitation"
             style={{display: 'block', width: 700, padding: 30}}
         >
-            {console.log(formData)}
-            <Modal isOpen={props.show} toggle={props.toggleInvite}>
+            <Modal isOpen={props.show} toggle={props.toggle}>
                 <ModalHeader>
-                    Choose guests and times
+                    Choose outing guests and times
                 </ModalHeader>
                 <ModalBody>
                     <Form onSubmit={createOuting}>
@@ -124,10 +123,9 @@ export default function Invitation(props) {
                         </FormGroup>
 
 
-                        <Button color="primary">
-                            Send Invitations
-                        </Button>
+                        <Button color="primary">Send Invitations</Button>
                     </Form>
+                    <Button onClick={props.toggle}>Close</Button>
                 </ModalBody>
             </Modal>
         </div>

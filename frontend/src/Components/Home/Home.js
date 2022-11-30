@@ -8,9 +8,6 @@ import {
   Form,
   FormGroup,
   Input,
-  Modal,
-  ModalBody,
-  ModalHeader,
 } from "reactstrap";
 import { baseUrl } from "../../Shared/baseUrl";
 import RestaurantDetail from "./RestaurantDetail";
@@ -44,31 +41,28 @@ function Home(props) {
   function isOpen(open, close) {
     let hour = date.getHours().toString();
     let min = date.getMinutes().toString();
-    const currentTime = (hour+":"+min+":00")
+    const currentTime = hour + ":" + min + ":00";
     
-    if ((currentTime) > open && (currentTime) < close) {
-      return "Open Now";
-    }else{
-      
-      return "Closed Now"}
+    return currentTime > open && currentTime < close;
   }
 
   function showDetail(id) {
     //Bring Restaurant Into Focus
     setSelectedRestaurant(
-      restaurants.find((restaurant) => {
-        toggle();
+      restaurants.find(restaurant => {
+        // toggle();
         return restaurant.id === id;
       })
     );
+    toggle();
   }
 
-  const restaurantElements = restaurants.map((restaurant) => {
+  const restaurantElements = restaurants.map(restaurant => {
     return (
       <RestaurantCard
         key={restaurant.id}
         restaurant={restaurant}
-        clickHandler={() => showDetail(restaurant.id) && toggle()}
+        clickHandler={() => showDetail(restaurant.id)}
       />
     );
   });
@@ -80,6 +74,7 @@ function Home(props) {
 
   return (
     <div className="home-container">
+      {console.log(selectedRestaurant)}
       <div className="hero-banner">
         <HeroBanner />
       </div>
@@ -94,7 +89,7 @@ function Home(props) {
               onChange={handleInputChange}
             />
           </FormGroup>
-          <Button color="primary" type="submit" onClick={handleSearch}>
+          <Button color="primary" onClick={handleSearch}>
             Search
           </Button>
         </Form>
@@ -107,48 +102,17 @@ function Home(props) {
           </Button>
         }
         {restaurantElements}
-        {selectedRestaurant !== null && (
-          <RestaurantDetail
-            restaurant={selectedRestaurant}
-            isOpen={modal}
-            toggle={toggle}
-          />
-        )}
       </div>
       <div className="restaurant-detail">
-        <div
-          style={{
-            display: "block",
-            width: 700,
-            padding: 30,
-          }}
-        >
-          {selectedRestaurant !== null && (
-            <Modal isOpen={modal} toggle={toggle}>
-              <ModalHeader>
-                {" "}
-                <img
-                  src={selectedRestaurant.imgUrl}
-                  alt={selectedRestaurant.name}
-                />
-                {selectedRestaurant.name}
-              </ModalHeader>
-              <ModalBody>{selectedRestaurant.address}</ModalBody>
-              <ModalBody>
-                {selectedRestaurant.city +
-                  ", " +
-                  selectedRestaurant.state +
-                  ", " +
-                  selectedRestaurant.zip}
-              </ModalBody>
-              <ModalBody>
-                {isOpen(selectedRestaurant.openTime,
-                selectedRestaurant.closeTime)}
-              </ModalBody>
-              <Button onClick={toggle}>Close</Button>
-            </Modal>
-          )}
-        </div>
+        {
+          selectedRestaurant !== null &&
+          <RestaurantDetail
+            restaurant={selectedRestaurant}
+            show={modal}
+            toggle={toggle}
+            restaurantOpen={isOpen(selectedRestaurant.openTime, selectedRestaurant.closeTime)}
+          />
+        }
       </div>
       <Invitation 
         show={showInvite}

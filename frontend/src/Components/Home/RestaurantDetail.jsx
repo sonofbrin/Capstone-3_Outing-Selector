@@ -13,11 +13,12 @@ import {
 
 function RestaurantDetail(props) {
   return (
-
     <div style={{
-        display: 'block', width: 700, padding: 30
+        display: 'block', 
+        width: 700, 
+        padding: 30
     }}>
-      <Modal show={props.isOpen} toggle= {props.toggle}>
+      <Modal isOpen={props.show} toggle={props.toggle}>
         <ModalHeader>
           {" "}
           <img src={props.restaurant.imgUrl} alt={props.restaurant.name} />
@@ -31,7 +32,9 @@ function RestaurantDetail(props) {
             ", " +
             props.restaurant.zip}
         </ModalBody>
-
+        <ModalBody>
+            {props.restaurantOpen ? "Open Now" : "Closed Now"}
+        </ModalBody>
         <Button onClick={props.toggle}>Close</Button>
       </Modal>
     </div>
