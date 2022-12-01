@@ -61,7 +61,7 @@ export default function Invitation(props) {
                 alert("Outing created successfully")
             }
         })
-        .catch((error) => alert(error.response.data.message))
+        .catch((error) => alert("more information needed to create invite"))
         props.toggle();
     }
 
