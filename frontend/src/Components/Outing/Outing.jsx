@@ -3,6 +3,7 @@ import React from "react";
 import { baseUrl } from "../../Shared/baseUrl";
 import OutingCard from "./OutingCard";
 import OutingDetail from "./OutingDetail";
+import './outing.css'
 
 export default function Outing(props) {
 
@@ -36,7 +37,7 @@ export default function Outing(props) {
 
     function EmptyDetail() {
         return (
-            <div>
+            <div className="outing-detail">
                 <h1>No Outing Selected.</h1>
                 <h2>Select an outing or create a new one.</h2>
             </div>
@@ -44,11 +45,11 @@ export default function Outing(props) {
     }
 
     return (
-        <div>
+        <div className="outing-container">
             <div className="sidebar">
                 {outingElements}
             </div>
-            <div>
+            <div className="outing-detail-container">
                 {selectedOuting ? <OutingDetail outing={selectedOuting} /> : <EmptyDetail />}
             </div>
         </div>
