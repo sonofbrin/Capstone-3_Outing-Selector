@@ -118,7 +118,7 @@ function Home(props) {
         show={showInvite}
         toggle={toggleInvite}
         location={searchLocation}
-        token={props.token}
+        token={props.userToken}
       />
     </div>
   );

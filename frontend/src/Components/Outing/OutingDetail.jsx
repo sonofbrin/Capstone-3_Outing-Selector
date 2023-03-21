@@ -15,11 +15,11 @@ export default function OutingDetail(props) {
                 <h1>Scheduled Time: {props.outing.dateTime}</h1>
                 <h1>Decision Cutoff Time: {props.outing.decisionTime}</h1>
             </div>
-            <h1>Top Voted</h1>
+            {/* <h1>Top Voted</h1>
             <div>
                 Under Construction
             </div>
-            <p></p>
+            <p></p> */}
         </div>
     )
 }

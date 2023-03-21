@@ -27,7 +27,6 @@ export default function Invitation(props) {
     const emailElements = formData.emails.map(email => <li>{email}</li>);
 
     function addEmail(event) {
-        // event.preventDefault();
         if (formData.guestEmail !== "") {
             setFormData(prevFormData => ({
                 ...prevFormData,
@@ -59,10 +58,10 @@ export default function Invitation(props) {
         .then(response => {
             if (response.status === 201) {
                 alert("Outing created successfully")
+                props.toggle();
             }
         })
         .catch((error) => alert(error.response.data.message))
-        props.toggle();
     }
 
     return (
@@ -93,7 +92,6 @@ export default function Invitation(props) {
                                 />
                             </Col>
                         </FormGroup>
-
                         <FormGroup row>
                             <Label
                                 for="decision-deadline"
@@ -111,7 +109,6 @@ export default function Invitation(props) {
                                 />
                             </Col>
                         </FormGroup>
-
                         <FormGroup row>
                             <Label
                                 for="guest-email"
@@ -138,8 +135,6 @@ export default function Invitation(props) {
                                 </Button>
                             </Col>
                         </FormGroup>
-
-
                         <Button color="primary">Send Invitations</Button>
                     </Form>
                     <Button onClick={props.toggle}>Close</Button>
